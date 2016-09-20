@@ -1,0 +1,78 @@
+
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    background-image: url("../img/smap-weather.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+#header {
+    text-align: center;
+	padding:10px;
+}
+#content {
+	padding-bottom:50px; /* Height of the footer element */
+    padding-top: 20%;
+    /*position: absolute;*/
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+}
+#footer {
+	width:100%;
+	height:50px;
+	position:absolute;
+	bottom:0;
+	left:0;
+    text-align: center;
+}
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-3.1%;
+    margin-top: -0.6%;
+}
+.col-fixed {
+    /* custom width */
+    width:320px;
+}
+
+
+
+.item {
+    width:100%;
+    height:100%;
+    padding:31px 23px;
+    color: #b9def0;
+    opacity:0.5;
+	background:#0f0f0f;
+}
+
+.item {
+	display:table;
+}
+.dv_content {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+.dv_content:before {
+    font-family:sans-serif;
+    font-size:12px;
+    letter-spacing:1px;
+}

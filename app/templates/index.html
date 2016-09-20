@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div id="header">
+        <div class="page-header">
+            <h1>Teste Nodemcu</h1>
+        </div>
+    </div><!-- #header -->
+
+    <div id="content">
+        <div class="container">
+            <div class="row row-centered">
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content" id="temperatura">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content ">
+                            joao
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content ">
+                            joao
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content ">
+                            joao
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content ">
+                            joao
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-centered col-fixed">
+                    <div class="item">
+                        <div class="dv_content ">
+                            joao
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="http://lab804.com.br" target="_blank"><img src="{{url_for('static', filename='img/sign_lab804.svg')}}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sock.js') }}"></script>
+
+{% endblock %}
