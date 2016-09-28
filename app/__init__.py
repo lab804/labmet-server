@@ -22,6 +22,8 @@ def create_app(config_stage):
     app.register_blueprint(main_blueprint)
 
     config[config_stage].init_app(app)
+    client.username_pw_set(username=config[config_stage].MQTT_USERNAME,
+                           password=config[config_stage].MQTT_PASSWORD)
     client.connect(config[config_stage].MQTT_BROKER_URL,
                    config[config_stage].MQTT_PORT,
                    config[config_stage].MQTT_KEEP_ALIVE)

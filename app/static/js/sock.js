@@ -13,7 +13,15 @@ $(document).ready(function(){
 
     socket.on('my response', function(msg) {
                 console.log(msg);
-                $('#temperatura').text(msg.payload).html();
+                $('#collected_at').text(msg.payload["collected_at"]).html();
+                $('#bmp180_temp').text(msg.payload["bmp180_temp"]).html();
+                $('#bmp180_alt').text(msg.payload["bmp180_alt"]).html();
+                $('#bmp180_press').text(msg.payload["bmp180_press"]).html();
+                $('#ds18b20_temp').text(msg.payload["ds18b20_temp"]).html();
+                $('#dht22_temp').text(msg.payload["dht22_temp"]).html();
+                $('#dht22_humid').text(msg.payload["dht22_humid"]).html();
+                $('#bh1750_illuminance').text(msg.payload["bh1750_illuminance"]).html();
+                $('#analog_soil_moisture').text(msg.payload["analog_soil_moisture"]).html();
             });
 
 

@@ -20,9 +20,8 @@ body {
 	padding:10px;
 }
 #content {
-	padding-bottom:50px; /* Height of the footer element */
+	padding-bottom:50px;
     padding-top: 20%;
-    /*position: absolute;*/
     margin: 0 auto;
     top: 50%;
     left: 50%;
@@ -41,14 +40,11 @@ body {
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
     text-align:left;
-    /* inline-block space fix */
     margin-right:-3.1%;
     margin-top: -0.6%;
 }
 .col-fixed {
-    /* custom width */
     width:320px;
 }
 
