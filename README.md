@@ -1,20 +1,24 @@
-
 # Weather monitoring platform with NodeMCU and Raspberry
 
 The weather monitoring platform is composed by NodeMCU clients and one or more
-Raspberry Pi servers. The NodeMCUs captures environmental weather data with its
+RaspberryPi servers. The NodeMCUs captures environmental weather data with its
 sensors and sends them to the RaspberryPi. The RaspberryPi server treats the
-collected data by the FAO [AquaCrop](http://www.fao.org/nr/water/docs/irrigationdrainage66.pdf) model and
-feeds the website, application and database with informations. The project is
-subdivided in three sub-projects, the [physical implementation](https://github.com/lab804/labmet-weatherstation) of the weather
-station that is consisted by the electronic circuit and C/C++ low level firmware,
-the RaspberryPi [Flask](http://flask.pocoo.org/) web server and [MQTT](http://mqtt.org/) broker, hosted [here](https://github.com/lab804), and
-the AquaCrop model [algorithm implementation](https://github.com/lab804).
+collected data and uses them as input for the FAO
+[AquaCrop](http://www.fao.org/nr/water/docs/irrigationdrainage66.pdf) model.
+With the processed data, the server feeds the website, application and database.
+The project is subdivided in three sub-projects, the
+[physical implementation](https://github.com/lab804/labmet-weatherstation)
+of the weather station that is consisted by the electronic circuit and C/C++
+low level firmware, the RaspberryPi [Flask](http://flask.pocoo.org/) web server
+and [MQTT](http://mqtt.org/) broker, hosted [here](https://github.com/lab804),
+and the [algorithm implementation](https://github.com/lab804) of the AquaCrop model.
 
 ![download](https://cloud.githubusercontent.com/assets/22622042/19200013/2f33d736-8c9d-11e6-9320-64f6caaec629.png)
 
 The Raspberry Pi is responsible for receive data collected by NodeMCU through MQTT
-and send to server this data. [MQTT](www.mqtt.org) is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport. It is useful for connections
+and send to server this data. [MQTT](www.mqtt.org) is a machine-to-machine (M2M)/
+"Internet of Things" connectivity protocol. It was designed as an extremely
+lightweight publish/subscribe messaging transport. It is useful for connections
 with remote locations where a small code footprint is required and/or network
  bandwidth is at a premium. It is ideal for mobile applications because of its
  small size, low power usage, minimised data packets, and efficient distribution
@@ -29,11 +33,18 @@ using the received data from the server.
 The Raspberry Pi server treats the collected data by the FAO AquaCrop model and
 feeds the website, application and database with informations.
 
-The database used to store the data is MongoDB, which receives the Broker data. [MongoDB](https://www.mongodb.com/) (from humongous) is a free and open-source cross-platform document-oriented database program. Classified as a [NoSQL](http://nosql-database.org/) database program, MongoDB avoids the traditional table-based relational database structure in favor of [JSON](https://www.mongodb.com/json-and-bson)-like documents with dynamic schemas
- (It calls the format [BSON](https://www.mongodb.com/json-and-bson)), making the integration of data in certain types of applications easier and faster.
+The database used to store the data is MongoDB, which receives the Broker data.
+[MongoDB](https://www.mongodb.com/) (from humongous) is a free and open-source
+cross-platform document-oriented database program. Classified as a
+[NoSQL](http://nosql-database.org/) database program, MongoDB avoids the
+ traditional table-based relational database structure in favor of
+ [JSON](https://www.mongodb.com/json-and-bson)-like documents with dynamic schemas
+ (It calls the format [BSON](https://www.mongodb.com/json-and-bson)), making
+ the integration of data in certain types of applications easier and faster.
 
 
-Figure 1 Illustrates the operation and the relationship between NodeMCU components, Raspberry Pi, Server, Web, App and MongoDB.
+Figure 1 Illustrates the operation and the relationship between components: NodeMCU,
+Raspberry Pi, Server, Web, App and MongoDB.
 
 #### Figure 1
 ![demonstrativo_1_labmet](https://cloud.githubusercontent.com/assets/22622042/19085103/771c335a-8a3f-11e6-8490-23a1b3c566d1.png)
@@ -48,10 +59,10 @@ where you have a Raspberry Pi connected to one or more servers.
 #### Figure 2
 ![demonstrativo_2_labmet](https://cloud.githubusercontent.com/assets/22622042/19085120/902669d8-8a3f-11e6-85ad-532257b41262.png)
 
-This condition is only possible if the stations are in the range of the manager's
-WiFi network. Remember we Raspberry Pi must be connected to the Internet, so we
-data and information are processed in real time, the which is indispensable for
-the components to work properly.
+This condition is only possible if the stations are in range of the manager's
+WiFi network. Remember the Raspberry Pi must be connected to the Internet, so the
+data and information are processed in real time, which is indispensable for
+the components work properly.
 
 ## Getting Started
 
