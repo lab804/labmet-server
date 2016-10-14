@@ -9,7 +9,7 @@ The Raspberry is responsible for receive data collected by NodeMCU through MQTT 
 
 The RaspberryPi server treats the collected data by the FAO AquaCrop model and feeds the website, application and database with informations.
 
-The database used to store the data is MongoDB, which receives the Broker data. [MongoDB](https://www.mongodb.com/) (from humongous) is a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB avoids the traditional table-based relational database structure in favor of JSON-like documents with dynamic schemas (It calls the format BSON), making the integration of data in certain types of applications easier and faster.
+The database used to store the data is MongoDB, which receives the Broker data. [MongoDB](https://www.mongodb.com/) (from humongous) is a free and open-source cross-platform document-oriented database program. Classified as a [NoSQL](http://nosql-database.org/) database program, MongoDB avoids the traditional table-based relational database structure in favor of [JSON](https://www.mongodb.com/json-and-bson)-like documents with dynamic schemas (It calls the format [BSON](https://www.mongodb.com/json-and-bson)), making the integration of data in certain types of applications easier and faster.
 
 
 Figure 1 Illustrates the operation and the relationship between NodeMCU components, Raspberry Pi, Server, Web, App and MongoDB.
@@ -18,12 +18,12 @@ Figure 1 Illustrates the operation and the relationship between NodeMCU componen
 ![demonstrativo_1_labmet](https://cloud.githubusercontent.com/assets/22622042/19085103/771c335a-8a3f-11e6-8490-23a1b3c566d1.png)
 
 
-In this example we use only one NodeMCU and one Raspberry. However, multiple NodeMCU can be added to one single Raspberry, so that you have several stations in different locations using a single manager, as observed in figure 2. It is important to mention that the same goes for the Raspberry Pi and servers, where you have a Raspberry Pi and one or more servers.
+In this example we use only one NodeMCU and one Raspberry. However, multiple NodeMCU can be added to one single Raspberry, so that you have several stations in different locations using a single manager, as observed in figure 2. It is important to mention that the same goes for the Raspberry Pi and servers, where you have a Raspberry Pi connected to one or more servers.
 
 #### Figure 2
 ![demonstrativo_2_labmet](https://cloud.githubusercontent.com/assets/22622042/19085120/902669d8-8a3f-11e6-85ad-532257b41262.png)
 
-This condition is only possible if the stations are in the range of the manager's WiFi network, Which is indispensable for the components to work properly.
+This condition is only possible if the stations are in the range of the manager's WiFi network, the which is indispensable for the components to work properly.
 
 ## Getting Started
 
