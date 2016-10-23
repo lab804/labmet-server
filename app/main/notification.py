@@ -18,13 +18,13 @@ class Notification:
         # TODO: Change this
         self.apikey = apikey
         self.profile = profile
-        self.headers = {}
-        self.headers['Content-Type'] = 'application/json'
-        self.headers['Authorization'] = 'Bearer ' + self.apikey
-        self.tokens = []
         self.base_url = 'https://api.ionic.io'
 
         if apikey is not None:
+            self.headers = {}
+            self.headers['Content-Type'] = 'application/json'
+            self.headers['Authorization'] = 'Bearer ' + self.apikey
+            self.tokens = []
             self.get_tokens()
 
     def test_auth(self):
@@ -54,7 +54,7 @@ class Notification:
     def send_push_all(self, msg):
         # TODO: Async func
         if not self.apikey:
-            return 
+            return
         url = self.base_url + '/push/notifications'
         if len(self.tokens) > 0:
 
