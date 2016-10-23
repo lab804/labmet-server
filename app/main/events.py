@@ -11,7 +11,7 @@ from config import Config
 notification = Notification(Config.NOTIFICATIONKEY) # o.0
 
 ERROR = False
-NIGHT = 18
+NIGHT = 5
 
 CULTURE = {
     'POTATO': {
@@ -29,7 +29,7 @@ CULTURE = {
 
 def on_mesage(mosq, obj, msg):
     global ERROR  # crazy o.0
-    json_msg = json.loads(msg)
+    json_msg = json.loads(msg.payload)
     json_msg['id'] = 123
     json_msg['status'] = 1
 

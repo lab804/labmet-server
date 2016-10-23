@@ -22,6 +22,7 @@ class Notification:
         self.headers['Authorization'] = 'Bearer ' + self.apikey
         self.tokens = []
         self.base_url = 'https://api.ionic.io'
+	self.get_tokens()
 
     def test_auth(self):
         """testing if auth correct"""
