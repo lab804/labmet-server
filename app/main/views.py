@@ -3,16 +3,16 @@
 
 from flask import render_template
 
-from ..labmet.fao_aquacrop_model.fixes import correcaotemperatura
+from ..labmet.fao_aquacrop_model.fixes import temperature_fix
 from . import main
 from ..labmet.fao_aquacrop_model.prodbrutafao import PotentialProductivity
 
 
 @main.route('/')
 def index():
-    temp_cloudy_days_fix = correcaotemperatura.CTCIIIVerao(24.5).ctn()
+    temp_cloudy_days_fix = temperature_fix.SummerTemperatureFixCIII(24.5).clear_days_fix()
     print(temp_cloudy_days_fix)
-    temp_clear_days_fix = correcaotemperatura.CTCIIIVerao(24.5).ctc()
+    temp_clear_days_fix = temperature_fix.SummerTemperatureFixCIII(24.5).cloudy_days_fix()
     print(temp_clear_days_fix)
 
     potential_productivity = PotentialProductivity(1001,

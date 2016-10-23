@@ -3,123 +3,237 @@
 
 import math
 
+from ...labmetExceptions import InputTypeException
 
-class Thornthwaite(object):
-    """
-    Método empírico baseado apenas na temperatura média do ar,
-    sendo esta sua principal vantagem. Foi desenvolvido para condições
-    de clima úmido e, por isso, normalmente apresenta sub-estimativa
-    da ETP em condições de clima seco. Apesar dessa limitação, é um
-    método bastante empregado para fins climatológicos, na escala
-    mensal. Esse método parte de uma ET padrão (ETp),
-    a qual é a ET para um mês de 30 dias e com N = 12h.
+
+class ThornthwaiteETo(object):
+    """Thornthwaite ETo
+
+    Empirical method based only on the mean air temperature,
+    which is its main advantage. It was developed for wet
+    weather conditions and therefore usually has underestimation
+    of ETP in dry weather conditions. Despite this limitation, it
+    is a method widely used for climatological purposes in
+    monthly scales. This method is part of a standard ET (ETo),
+    which is ET for a month of 30 days, with N = 12h.
+
     """
 
     def __init__(self, avg_temp, photoperiod, n_days,
-                 avg_anual_temp):
+                 avg_annual_temp):
+        """Class init method
+
+        Init method for the thornthwaite
+
+        :param avg_temp: Period average air temperature
+        :param photoperiod: Period average photoperiod
+        :param n_days: Number of days
+        :param avg_annual_temp: Average annual temperature
+
+        :type avg_temp: int or float
+        :type photoperiod: int or float
+        :type n_days: int
+        :type avg_annual_temp: int or float
+        """
         try:
             self.avg_temp = float(avg_temp)
             self.photoperiod = float(photoperiod)
             self.n_days = self.period_validation(n_days)
-            self.avg_anual_temp = float(avg_anual_temp)
+            self.avg_annual_temp = float(avg_annual_temp)
         except Exception as e:
             print("Error: %s" % e)
 
         self.__temp_max_etp = 26.5
 
     @staticmethod
-    def period_validation(period):
-        """
-        Funcao para validar quantidade de dias maximo e minimo
-        dentro de um mes.
-        """
-        if int(period) >= 1 and int(period) <= 31:
-            return period
-        else:
-            raise Exception('Periodo tem que ser maior que 1 e menor \
-                            que 31')
+    def period_validation(n_days):
+        """Period validation
 
-    def temp_etp(self):
+        Static function to validate the maximum
+        and minimum amount of days in a month
+
+        :param n_days: The number of days
+
+        :type n_days: int
+
+        :return: The number of days, or raises Exception
+        :rtype:int
         """
-        Funcao para retornar o tipo de calculo ETP.
+        if 1 <= int(n_days) <= 31:
+            return n_days
+        else:
+            raise InputTypeException('The number of days in '
+                                     'the period must be greater '
+                                     'than 1 and lower than 31')
+
+    def temp_eto_check(self):
+        """Temperature ETo check
+
+        method to determinate the type of ETo calculus
+
+        :return: Bool flag to ETo calculus type
+        :rtype: bool
         """
-        if self.avg_temp >= 0 and self.avg_temp <= self.__temp_max_etp:
+        if 0 <= self.avg_temp <= self.__temp_max_etp:
             return True
         else:
             return False
 
-    def I(self):
-        return round(12 * math.pow((0.2 * self.avg_anual_temp), 1.514), 2)
+    def h_i(self):
+        """Heat index
 
-    def A(self, i):
-        return round(0.49239 + (1.7912 * (math.pow(10, -2) * i)) \
-                   - (7.71 * (math.pow(10, -5) * math.pow(i, 2))) \
-                   + (6.75 * (math.pow(10, -7) * math.pow(i, 3))), 2)
+        Calculates an heat index which expresses
+        the level of heat in a region
 
-    def cor(self):
-        return round(self.photoperiod / 12.0 * \
+        :return: Heat index
+        :type: float
+        """
+        return round(12 * math.pow((0.2 * self.avg_annual_temp), 1.514), 2)
+
+    def a(self):
+        """Thornthwaite ETo "a" exponent
+
+        The "a" exponent is a regional thermal
+        index and is calculated by a polynomial
+        equation
+
+        :return: "a" exponent
+        :rtype: float
+        """
+        h_i = self.h_i()
+        return round(0.49239 + (1.7912 * (math.pow(10, -2) * h_i))
+                     - (7.71 * (math.pow(10, -5) * math.pow(h_i, 2)))
+                     + (6.75 * (math.pow(10, -7) * math.pow(h_i, 3))), 2)
+
+    def std_month_fix(self):
+        """Standard month fix
+
+        The ETo by definition is the monthly evapotranspiration
+        in a standard month with 30 days and a photoperiod of
+        12 hours. To get the value of the ETo of a corresponding
+        month, it is necessary to fix it in function of the real
+        number of days and photoperiod
+
+        :return: Standard month fix factor
+        :rtype: float
+        """
+        return round(self.photoperiod / 12.0 *
                      self.n_days / 30.0, 2)
 
-    def ETp(self):
-        i = self.I()
-        a = self.A(i)
-        if self.temp_etp():
+    def eto(self):
+        """Potential evapotranspiration
+
+        This method is responsible to calculate
+        the potential evapotranspiration by itself.
+
+        :return: The ETo
+        :rtype: float
+        """
+        i = self.h_i()
+        a = self.a()
+        if self.temp_eto_check():
             return round(16 * math.pow((10 * self.avg_temp / i), a), 2)
         else:
-            return round(-415.85 + ((32.24 * self.avg_temp) - \
+            return round(-415.85 + ((32.24 * self.avg_temp) -
                                     (0.43 * math.pow(self.avg_temp, 2))), 2)
 
-    def ETP(self):
-        """ Funcao que retorna ETP por mes"""
-        cor = self.cor()
-        ETp = self.ETp()
+    def eto_month(self):
+        """Standard month ETo
+
+        Calculates the ETo of a standard month,
+        by multiplying the ETo with a standard
+        month factor
+
+        :return: The ETo of a given month
+        :rtype: float
+        """
+        cor = self.std_month_fix()
+        ETp = self.eto()
         return round(cor * ETp, 2)
 
-    def ETPDia(self):
-        """ Funcao que retorna ETP por dia"""
-        cor = self.cor()
-        ETp = self.ETp()
+    def eto_day(self):
+        """ETo of a day
+
+        Brings the ETo to a daily scale.
+
+        :return: ETo of a given day
+        :rtype: float
+        """
+        cor = self.std_month_fix()
+        ETp = self.eto()
         return round((cor * ETp) / self.n_days, 2)
 
     def __str__(self):
-        return "%.2f mm/mes - %.2f mm/dia" % (self.ETP(), self.ETPDia())
+        return "%.2f mm/month - %.2f mm/day" % (self.eto_month(), self.eto_day())
 
 
-class ThornthwaiteCamargo(Thornthwaite):
+class ThornthwaiteCamargoETo(ThornthwaiteETo):
+    """Thornthwaite Camargo method
+
+    It's an adaptation of the thornthwaite method
+    proposed by Camargo et al. and can be used in
+    any climate condition. To use it's necessary to
+    know the local thermal amplitude, instead of the average
+    air temperature. The advantage is that the ETo is not
+    underestimated in dry weather conditions. The downside is
+    that there is now needed the max and min temperatures.
+    As with the original Thornthwaite method, this method
+    calculates a standard ET (ETo), which is ET for a month
+    with 30 days, with N = 12h
+
     """
-    É o método de Thornthwaite, porém adaptado por Camargo et al.
-    (1999) para ser empregado em qualquer condição climática.
-    Para tanto, utiliza-se uma temperatura efetiva (Tef), que expressa
-    a amplitude térmica local, ao invés da temperatura média do ar. A
-    vantagem é que nessa nova formulação a ETP não é mais subestimada
-    em condições de clima seco. A desvantagem é que há agora necessidade
-    de dados de Tmax e Tmin. Assim como no método original de Thornthwaite,
-    esse método parte de uma ET padrão (ETp), a qual é a ET para um mês
-    de 30 dias e com N = 12h
-    """
 
+    def __init__(self, max_temp, min_temp, photoperiod, n_days,
+                 avg_annual_temp):
+        """Class init method
 
-    def __init__(self, temp_max, temp_min, photoperiod, n_days,
-                 avg_anual_temp):
+        The init method for the ThornthwaiteCamargoEto
+        class.
+
+        :param max_temp: The maximum temperature(ºC)
+        :param min_temp: The minimum temperature(ºC)
+        :param photoperiod: Period average photoperiod
+        :param n_days: Number of days
+        :param avg_annual_temp: Average annual temperature
+
+        :type max_temp: int or float
+        :type min_temp: int or float
+        :type photoperiod: int or float
+        :type n_days: int
+        :type avg_annual_temp: int or float
+
+        """
         try:
-            self.tef = self.calculate_tef(temp_max, temp_min)
+            self.tef = self.effective_temperature(max_temp, min_temp)
         except Exception as e:
             print("Error: %s" % e)
 
-        Thornthwaite.__init__(self, self.tef, photoperiod, n_days,
-                              avg_anual_temp)
+        ThornthwaiteETo.__init__(self, self.tef, photoperiod, n_days,
+                                 avg_annual_temp)
 
+    @staticmethod
+    def effective_temperature(t_max, t_min):
+        """Effective temperature
 
-    def calculate_tef(self, t_max, t_min):
-        """ Funcao para calcular Temperatura Efetiva"""
-        if t_max > t_min:
-            return round(0.36 * (3 * t_max - t_min), 2)
-        else:
-            raise AttributeError('Temperatura maxima tem que ser maior que a minima.')
+        Calculus of the effective temperature
+
+        :param t_max: The maximum temperature
+        :param t_min: The minimum temperature
+
+        :type t_max: int or float
+        :type t_min: int or float
+
+        :return: Effective temperature
+        :rtype: float
+        """
+        if t_max < t_min:
+            t_max, t_min = t_min, t_max
+
+        return round(0.36 * (3 * t_max - t_min), 2)
 
 
 if __name__ == '__main__':
-    test = Thornthwaite(24.4, 13.4, 31, 21.1)
+    test = ThornthwaiteETo(24.4, 13.4, 31, 21.1)
     print("Thornthwaite: \t\t", test)
-    test2 = ThornthwaiteCamargo(10, 13, 10.6, 31, 21.1)
+    test2 = ThornthwaiteCamargoETo(13, 10, 10.6, 31, 21.1)
     print("Thornthwaite Camargo: \t", test2)
