@@ -15,6 +15,7 @@ class NotificationNotAuth(Exception):
 class Notification:
 
     def __init__(self, apikey, profile='labmet'):
+        # TODO: Change this
         self.apikey = apikey
         self.profile = profile
         self.headers = {}
@@ -22,7 +23,9 @@ class Notification:
         self.headers['Authorization'] = 'Bearer ' + self.apikey
         self.tokens = []
         self.base_url = 'https://api.ionic.io'
-	self.get_tokens()
+
+        if apikey is not None:
+            self.get_tokens()
 
     def test_auth(self):
         """testing if auth correct"""
@@ -50,6 +53,8 @@ class Notification:
 
     def send_push_all(self, msg):
         # TODO: Async func
+        if not self.apikey:
+            return 
         url = self.base_url + '/push/notifications'
         if len(self.tokens) > 0:
 
