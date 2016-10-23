@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import json
-from datetime import datetime
+from datetime import datetime, timdedelta
 from .. import socketio
-from notification import Notification
 
 from config import Config
+from notification import Notification
 
-notification = Notification(Config.NOTIFICATIONKEY) # o.0
+notification = Notification(Config.NOTIFICATIONKEY)  # o.0
 
 ERROR = False
-NIGHT = 5
+NIGHT = 5  # Hour (supposedly)
+DELAY = None
+SECONDS_DELAY = 10 # Delay send push just example massive.
 
 CULTURE = {
     'POTATO': {
@@ -29,6 +31,7 @@ CULTURE = {
 
 def on_mesage(mosq, obj, msg):
     global ERROR  # crazy o.0
+    global DELAY
     json_msg = json.loads(msg.payload)
     json_msg['id'] = 123
     json_msg['status'] = 1
@@ -39,7 +42,13 @@ def on_mesage(mosq, obj, msg):
     if ERROR is False and json_msg['bh1750_illuminance'] < CULTURE['POTATO']['BEST_PERFOMACE']['ILLUMINACE']:
         # is night?
         now = datetime.now()
-        if now.hour > NIGHT:
+
+        # first time?
+        if DELAY is None:
+            DELAY = now + timdedelta(seconds=SECONDS_DELAY)
+
+        if now.hour > NIGHT and now < DELAY:
             msg = CULTURE['POTATO']['MSGS']['LESS_ILLUMINACE']
             notification.send_push_all(msg)
             ERROR = True
+            DELAY = now + timdedelta(seconds=SECONDS_DELAY)
