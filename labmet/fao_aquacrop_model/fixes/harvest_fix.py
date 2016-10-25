@@ -216,7 +216,7 @@ class HarvestedPartFix(HarvestPartFixTable):
     @culture.setter
     def culture(self, culture):
         if culture in self._cultures:
-            culture_name = {"name": culture}
+            culture_name = {"name": culture.lower()}
             culture_name.update(self._cultures[culture])
             self.__culture = culture_name
         else:

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from base.labmetExceptions import InputTypeException
+from ..labmetExceptions import InputTypeException
 from datetime import datetime
-from base.radiation.factors import Photoperiod
+from factors import Photoperiod
 import math
 
 
@@ -126,6 +126,18 @@ class ExtraterrestrialIrradiance(Photoperiod):
         :rtype: float
         """
         return self.ho() / 0.041868
+
+    def update_date_lat(self, new_date=datetime.now(), lat=None):
+        if isinstance(new_date, datetime):
+            self.day = new_date
+        else:
+            raise InputTypeException("new_date must be an valid datetime!")
+        if lat is not None:
+            if isinstance(lat, float) or isinstance(lat, int) \
+                    and -90.00 <= lat <= 90.00:
+                self.lat = lat
+            else:
+                raise InputTypeException("Lat must be a valid latitude of type int or float!")
 
 
 class Irradiance(Photoperiod):

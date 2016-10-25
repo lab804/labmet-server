@@ -16,7 +16,7 @@ Copyright 2016, Lab804
 import math
 
 from math import exp, log
-from base.labmetExceptions import InputException
+from labmet.labmetExceptions import InputException
 
 __author__ = 'joaotrevizoliesteves, Murilo Ijanc'
 __copyright__ = "Copyright 2015, Lab804"
@@ -226,7 +226,7 @@ class ThornthwaiteWaterBalance(object):
         with all the water balance values
         :rtype: dict
         """
-        if precipitation and pet is not None:
+        if precipitation is not None and pet is not None:
             self.__precipitation = precipitation
             self.__pet = pet
             self._pet_precipitation = self.__precipitation - self.__pet
@@ -266,28 +266,26 @@ class ThornthwaiteWaterBalance(object):
         return thornthwaite_wb_simple
 
 
-if __name__ == '__main__':
-
-    data = {
-        "awc": 100,
-    }
-    t_wb_data = {"pet": 25,
-                 "precipitation": 10}
-    t_wb = ThornthwaiteWaterBalance(**data)
-    print(t_wb.thornthwaite_water_balance(**t_wb_data))
-
-    t_wb_data = {"pet": 25,
-                 "precipitation": 100}
-    print(t_wb.thornthwaite_water_balance(**t_wb_data))
-
-    t_wb_data = {"pet": 45,
-                 "precipitation": 35}
-    print(t_wb.thornthwaite_water_balance(**t_wb_data))
-    test_keys_2 = \
-        sorted([i for i in t_wb.thornthwaite_water_balance().values()])
-
-    print(test_keys_2)
-
-    teste_cls_mtd = \
-        ThornthwaiteWaterBalance.thornthwaite_wb_simple(100, 45, 35)
-    print(teste_cls_mtd.thornthwaite_water_balance())
+# if __name__ == '__main__':
+#
+#     data = {
+#         "awc": 100,
+#     }
+#     t_wb = ThornthwaiteWaterBalance(**data)
+#     print(t_wb.thornthwaite_water_balance(**t_wb_data))
+#
+#     t_wb_data = {"pet": 25,
+#                  "precipitation": 100}
+#     print(t_wb.thornthwaite_water_balance(**t_wb_data))
+#
+#     t_wb_data = {"pet": 45,
+#                  "precipitation": 35}
+#     print(t_wb.thornthwaite_water_balance(**t_wb_data))
+#     test_keys_2 = \
+#         sorted([i for i in t_wb.thornthwaite_water_balance().values()])
+#
+#     print(test_keys_2)
+#
+#     teste_cls_mtd = \
+#         ThornthwaiteWaterBalance.thornthwaite_wb_simple(100, 45, 35)
+#     print(teste_cls_mtd.thornthwaite_water_balance())

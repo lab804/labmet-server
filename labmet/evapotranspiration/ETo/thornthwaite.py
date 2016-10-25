@@ -3,7 +3,7 @@
 
 import math
 
-from ...labmetExceptions import InputTypeException
+from labmet.labmetExceptions.labmetExceptions import InputTypeException
 
 
 class ThornthwaiteETo(object):
@@ -233,7 +233,7 @@ class ThornthwaiteCamargoETo(ThornthwaiteETo):
 
 
 if __name__ == '__main__':
-    test = ThornthwaiteETo(24.4, 13.4, 31, 21.1)
+    test = ThornthwaiteETo(24, 12.2, 31, 21).eto_day()
     print("Thornthwaite: \t\t", test)
     test2 = ThornthwaiteCamargoETo(13, 10, 10.6, 31, 21.1)
     print("Thornthwaite Camargo: \t", test2)

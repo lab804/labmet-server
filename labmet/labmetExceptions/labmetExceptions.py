@@ -10,6 +10,7 @@ class InputException(Exception):
     :raises: InputException
     """
 
+
 class InputTypeException(Exception):
     """Wrong Input type Exceptions
 
@@ -19,6 +20,7 @@ class InputTypeException(Exception):
     :raises: InputTypeException
     """
     pass
+
 
 class InputRangeException(Exception):
     """Wrong Input Range Exception

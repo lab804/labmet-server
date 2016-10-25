@@ -127,7 +127,7 @@ class PotentialProductivity(object):
         else:
             return clear_pot_prod / 10000
 
-    def raw_potential_productivity(self, ho_cloudy=None, ho_clear=None, hectometer_sqr_m=True):
+    def raw_potential_productivity(self,n_cycle_days=1, ho_cloudy=None, ho_clear=None, hectometer_sqr_m=True):
         """Raw Potential Productivity
 
         Calculates de raw potential productivity of the given period,
@@ -145,12 +145,11 @@ class PotentialProductivity(object):
         clear_productivity = self.raw_potential_productivity_clear_days(ho_clear, hectometer_sqr_m)
 
         return (
-            cloudy_productivity +
-            clear_productivity
+            (cloudy_productivity + clear_productivity) * n_cycle_days
         )
 
     def potential_productivity(self, leaf_area_fix, breathing_fix,
-                               harvested_part_fix, n_cycle_days,
+                               harvested_part_fix, n_cycle_days=1,
                                ho_cloudy=None, ho_clear=None,
                                hectometer_sqr_m=True):
         """Potential Productivity
@@ -183,20 +182,17 @@ class PotentialProductivity(object):
         :rtype: float
         """
 
-        raw_pot_productivity = self.raw_potential_productivity(ho_cloudy, ho_clear, hectometer_sqr_m)
+        raw_pot_productivity = self.raw_potential_productivity(n_cycle_days, ho_cloudy,
+                                                               ho_clear, hectometer_sqr_m)
 
         pot_productivity = (
             raw_pot_productivity *
             leaf_area_fix *
             breathing_fix *
-            harvested_part_fix *
-            n_cycle_days
+            harvested_part_fix
         )
 
-        if hectometer_sqr_m:
-            return pot_productivity
-        else:
-            return pot_productivity / 10000
+        return pot_productivity
 
     def __str__(self, ho_cloudy=None, ho_clear=None, hectometer_sqr_m=True):
         str_rpr = "Raw potential productivity on cloudy days: {:.3f} {},\n" \
@@ -217,3 +213,10 @@ class PotentialProductivity(object):
                     clear_productivity, unit,
                     pot_productivity, unit)
 
+
+class ObtainableProductivity(object):
+    def __init__(self, ky):
+        self.ky = ky
+
+    def obtainable_productivity(self, eto, etc, potential_productivity):
+        return (1 - self.ky * (1 - eto / etc)) * potential_productivity
