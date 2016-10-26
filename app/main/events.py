@@ -97,7 +97,7 @@ def on_mesage(mosq, obj, msg):
     json_msg["real_productivity"] = \
         obtainable_productivity.obtainable_productivity(etc=real_et,
                                                         eto=eto,
-                                                        potential_productivity=potential_productivity)
+                                                        potential_productivity=json_msg["potential_productivity"])
 
     read_soil_moisture = soil_moisture_to_mm(json_msg['analog_soil_moisture'], awc_potato)
     variation = read_soil_moisture - soil_moisture
