@@ -1,9 +1,9 @@
 {
-  "name": "requirements_estacao",
+  "name": "weatherlabmet",
   "authors": [
     "joaonegro <joao@lab804.com.br>"
   ],
-  "description": "estacao meteorologica app requirements",
+  "description": "weather station labmet",
   "main": "estacao",
   "license": "MIT",
   "homepage": "http://git.lab804.com.br/lab804/estacao-meteorologica-app",
@@ -17,7 +17,9 @@
   ],
   "dependencies": {
     "bootstrap": "v4.0.0-alpha.2",
-    "socket.io-client": "^1.4.6",
-    "weather-icons": "^2.0.10"
+    "socket.io-client": "^1.4.6"
+  },
+  "resolutions": {
+    "jquery": "^3.1.1"
   }
 }
