@@ -13,3 +13,4 @@ python-socketio==1.5.1
 six==1.10.0
 Werkzeug==0.11.11
 requests
+eventlet

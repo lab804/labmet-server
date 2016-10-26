@@ -12,7 +12,6 @@ from app.resources import MQTTThread
 manager = Manager(create_app('default'))
 
 
-
 class Server(_Server):
     help = description = 'Runs the Socket.IO web server'
 
@@ -54,7 +53,6 @@ class Server(_Server):
         return options
 
     def __call__(self, app, host, port, use_debugger, use_reloader):
-        # override the default runserver command to start a Socket.IO server
         if use_debugger is None:
             use_debugger = app.debug
             if use_debugger is None:
