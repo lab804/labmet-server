@@ -63,7 +63,6 @@ def on_mesage(mosq, obj, msg):
     global awc_potato
     global real_et
 
-
     n_days = 130
     peak_l_a_index = 3
     json_msg = json.loads(msg.payload)
@@ -110,7 +109,7 @@ def on_mesage(mosq, obj, msg):
             precipitation = variation
     else:
         precipitation = 0
-        real_et = read_soil_moisture 
+        real_et = read_soil_moisture
 
     soil_moisture = read_soil_moisture
     radiation_data["day"] = datetime.now()
@@ -119,7 +118,7 @@ def on_mesage(mosq, obj, msg):
                           30,
                           avg_year_temp).eto_day() * eto_potato
 
-    
+
     json_msg["precipitation"] = precipitation
     json_msg["eto"] = eto
     json_msg["etc"] = real_et
