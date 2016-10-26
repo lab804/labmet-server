@@ -33,7 +33,7 @@ def index():
 
     t_wb = ThornthwaiteWaterBalance(awc=awc_potato, soil_water_moisture=hum)
 
-    wb = t_wb.thornthwaite_water_balance(precipitation=0, pet=eto)
+    wb = t_wb.thornthwaite_water_balance(precipitation=0, eto=eto)
     print wb
     etc = wb["real_et"]
     print "evapo cultura", etc

@@ -84,15 +84,15 @@ class ThornthwaiteWaterBalance(object):
             self.deficit = deficit
             self.excess = excess
 
-            self._pet_precipitation = None
+            self._eto_precipitation = None
             self.__precipitation = None
-            self.__pet = None
+            self.__eto = None
             self.__init_soil_water_moisture = self.soil_water_moisture
         except Exception as e:
             print("Error: %s" % e)
 
-    def __check_pet_precipitation(self):
-        """ PET minus precipitation check
+    def __check_eto_precipitation(self):
+        """ ETo minus precipitation check
 
         Private method to check if the potential evapotranspiration minus
          the precipitation are greater than zero
@@ -100,7 +100,7 @@ class ThornthwaiteWaterBalance(object):
         :return: A true boolean if the result is greater than zero
         :rtype: bool
         """
-        if self._pet_precipitation >= 0:
+        if self._eto_precipitation >= 0:
             return True
         else:
             return False
@@ -112,12 +112,12 @@ class ThornthwaiteWaterBalance(object):
          accumulated negative
 
         """
-        check_etp_p = self.__check_pet_precipitation()
+        check_etp_p = self.__check_eto_precipitation()
         if self.accumulated_negative is None:
             if check_etp_p:
                 self.accumulated_negative = 0
             else:
-                self.accumulated_negative = self._pet_precipitation
+                self.accumulated_negative = self._eto_precipitation
         else:
             if check_etp_p:
                 self.__updated_soil_water_moisture()
@@ -125,7 +125,7 @@ class ThornthwaiteWaterBalance(object):
                     self.awc * log(self.soil_water_moisture/self.awc)
             else:
                 self.accumulated_negative = - abs(self.accumulated_negative) \
-                                            + self.__precipitation - self.__pet
+                                            + self.__precipitation - self.__eto
 
     def __updated_soil_water_moisture(self):
         """Updates the soil water moisture value
@@ -134,9 +134,9 @@ class ThornthwaiteWaterBalance(object):
         the soil water moisture
 
         """
-        if self.__check_pet_precipitation():
+        if self.__check_eto_precipitation():
             soil_water_moisture = self.__init_soil_water_moisture + \
-                                  self.__precipitation - self.__pet
+                                  self.__precipitation - self.__eto
             if soil_water_moisture > self.awc:
                 self.soil_water_moisture = self.awc
             else:
@@ -153,7 +153,7 @@ class ThornthwaiteWaterBalance(object):
 
         """
         if self.variation is None:
-            if self.__check_pet_precipitation():
+            if self.__check_eto_precipitation():
                 self.variation = 0
             else:
                 self.variation = self.soil_water_moisture - self.awc
@@ -170,8 +170,8 @@ class ThornthwaiteWaterBalance(object):
          evapotranspiration value
 
         """
-        if self.__check_pet_precipitation():
-            self.real_et = self.__pet
+        if self.__check_eto_precipitation():
+            self.real_et = self.__eto
         else:
             self.real_et = self.__precipitation + abs(self.variation)
 
@@ -182,10 +182,10 @@ class ThornthwaiteWaterBalance(object):
          deficit value
 
         """
-        if self.__check_pet_precipitation():
+        if self.__check_eto_precipitation():
             self.deficit = 0
         else:
-            self.deficit = self.__pet - self.real_et
+            self.deficit = self.__eto - self.real_et
 
     def __update_excess(self):
         """Updates the excess value
@@ -197,9 +197,9 @@ class ThornthwaiteWaterBalance(object):
         if self.soil_water_moisture < self.awc:
             self.excess = 0
         else:
-            self.excess = self._pet_precipitation - self.variation
+            self.excess = self._eto_precipitation - self.variation
 
-    def thornthwaite_water_balance(self, precipitation=None, pet=None):
+    def thornthwaite_water_balance(self, precipitation=None, eto=None):
         """Thornthwaite water balance
 
         This is main method of this class. This method updates
@@ -208,28 +208,28 @@ class ThornthwaiteWaterBalance(object):
 
         .. note::
             To update the water balance with new values its required to pass
-            precipitation and pet values to this method, but if just a  report
+            precipitation and ETo values to this method, but if just a  report
             is required and its not necessary to update the water balance
             just call this methods with the default args
 
         .. warning::
             It is required to call this method at least once
-            with precipitation and pet values
+            with precipitation and ETo values
 
         :param precipitation: The precipitation in the period.
-        :param pet: The potential evapotranspiration in the period
+        :param eto: The potential evapotranspiration in the period
 
         :type precipitation: int or float
-        :type pet: int or float
+        :type eto: int or float
 
         :return: A dict with a report
         with all the water balance values
         :rtype: dict
         """
-        if precipitation is not None and pet is not None:
+        if precipitation is not None and eto is not None:
             self.__precipitation = precipitation
-            self.__pet = pet
-            self._pet_precipitation = self.__precipitation - self.__pet
+            self.__eto = eto
+            self._eto_precipitation = self.__precipitation - self.__eto
             self.__update_accumulated_negative()
             self.__updated_soil_water_moisture()
             self.__update_variation()
@@ -237,32 +237,32 @@ class ThornthwaiteWaterBalance(object):
             self.__update_deficit()
             self.__update_excess()
 
-        elif self.__precipitation is None or self.__pet is None:
+        elif self.__precipitation is None or self.__eto is None:
                 raise InputException("You must enter the precipitation and the"
-                                     " pet at least once in the object life")
+                                     " eto at least once in the object life")
         return {
-            "precipitation_pet": self._pet_precipitation,
+            "precipitation_eto": self._eto_precipitation,
             "soil_water_moisture": self.soil_water_moisture,
             "accumulated_negative": self.accumulated_negative,
             "variation": self.variation,
             "real_et": self.real_et,
-            "pet": self.__pet,
+            "eto": self.__eto,
             "deficit": self.deficit,
             "excess": self.excess,
             "precipitation": self.__precipitation
         }
 
     @classmethod
-    def thornthwaite_wb_simple(cls, cad, precipitation, pet):
+    def thornthwaite_wb_simple(cls, awc, precipitation, eto):
         """S
 
-        :param cad:
+        :param awc:
         :param precipitation:
-        :param pet:
+        :param eto:
         :return:
         """
-        thornthwaite_wb_simple = cls(cad)
-        thornthwaite_wb_simple.thornthwaite_water_balance(precipitation, pet)
+        thornthwaite_wb_simple = cls(awc)
+        thornthwaite_wb_simple.thornthwaite_water_balance(precipitation, eto)
         return thornthwaite_wb_simple
 
 
