@@ -79,7 +79,7 @@ def on_mesage(mosq, obj, msg):
     temp_clear_days_fix = SummerTemperatureFixCIII(temperature=json_msg["ds18b20_temp"]).cloudy_days_fix()
 
     n_N = lux_to_n_N(json_msg["bh1750_illuminance"])
-
+	
     potential_productivity = PotentialProductivity(extra_radiation.ho_cal_sqaured_cm(),
                                                    temp_cloudy_days_fix=temp_cloudy_days_fix,
                                                    temp_clear_days_fix=temp_clear_days_fix,
@@ -102,24 +102,33 @@ def on_mesage(mosq, obj, msg):
     read_soil_moisture = soil_moisture_to_mm(json_msg['analog_soil_moisture'], awc_potato)
     variation = read_soil_moisture - soil_moisture
 
-    if variation > 0:
+    if read_soil_moisture > eto:
         real_et = eto
-        if variation > awc_potato:
+        if variation >= awc_potato:
             precipitation = awc_potato
         else:
             precipitation = variation
     else:
         precipitation = 0
-        real_et = abs(variation)
+        real_et = read_soil_moisture 
+
     soil_moisture = read_soil_moisture
     radiation_data["day"] = datetime.now()
     eto = ThornthwaiteETo(avg_year_temp,
                           extra_radiation.photoperiod(),
-                          1,
+                          30,
                           avg_year_temp).eto_day() * eto_potato
 
     json_msg["precipitation"] = precipitation
 
+    print(json_msg)
+    print "eto: ", eto
+    print "etc: ", real_et
+    print "potential: ", json_msg["potential_productivity"]     
+    print "real: ", json_msg["real_productivity"] 
+    print "soil: ", read_soil_moisture
+    print "n_N: ", n_N
+   
     socketio.emit('my response', {'topic': msg.topic, 'payload': json_msg},
                   namespace='/weather_data')
 

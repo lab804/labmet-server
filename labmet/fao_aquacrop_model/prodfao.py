@@ -220,6 +220,6 @@ class ObtainableProductivity(object):
 
     def obtainable_productivity(self, eto, etc, potential_productivity):
         if etc != 0:
-            return (1 - self.ky * (1 - eto / etc)) * potential_productivity
+            return (1 - self.ky * (1 - etc / eto)) * potential_productivity
         else:
             return 0

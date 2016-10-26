@@ -29,7 +29,7 @@ manager.add_command("shell", Shell(make_context=make_shell_context))
 def runserver():
     socketio.run(app,
                  host='0.0.0.0',
-                 port=8000)
+                 port=80)
 
 if __name__ == '__main__':
     mqtt_thread = MQTTThread()

@@ -8,12 +8,10 @@ def lux_to_n_N(lux):
     :return: Lumens to cloudy/sunny ratio
     :rtype: float
     """
-    if lux < 1500:
-        return 0.0
-    elif lux > 20000:
+    if lux > 20000.0:
         return 1.0
     else:
-        return lux/20000
+        return float(lux)/20000.0
 
 
 def soil_moisture_to_mm(percentage, awc):
