@@ -10,7 +10,9 @@ MarkupSafe==0.23
 paho-mqtt==1.2
 python-engineio==1.0.3
 python-socketio==1.5.1
+requests==2.11.1
 six==1.10.0
+tabulate==0.7.5
 Werkzeug==0.11.11
 requests
 eventlet
