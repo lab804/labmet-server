@@ -119,16 +119,11 @@ def on_mesage(mosq, obj, msg):
                           30,
                           avg_year_temp).eto_day() * eto_potato
 
+    
     json_msg["precipitation"] = precipitation
-
-    print(json_msg)
-    print "eto: ", eto
-    print "etc: ", real_et
-    print "potential: ", json_msg["potential_productivity"]     
-    print "real: ", json_msg["real_productivity"] 
-    print "soil: ", read_soil_moisture
-    print "n_N: ", n_N
-   
+    json_msg["eto"] = eto
+    json_msg["etc"] = real_et
+	   
     socketio.emit('my response', {'topic': msg.topic, 'payload': json_msg},
                   namespace='/weather_data')
 
