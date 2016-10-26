@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'testing'
     MQTT_USERNAME = os.environ.get('MQTT_SERVER_USERNAME') or "server_listener"
     MQTT_PASSWORD = os.environ.get('MQTT_PASSWORD') or "l4b804"
