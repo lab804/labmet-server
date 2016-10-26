@@ -9,7 +9,7 @@ from config import Config
 from notification import Notification
 
 from labmet import ExtraterrestrialIrradiance, \
-    ThornthwaiteETo, ThornthwaiteWaterBalance, ObtainableProductivity, \
+    ThornthwaiteETo, ObtainableProductivity, \
     SummerTemperatureFixCIII, PotentialProductivity, BreathingFix, \
     HarvestedPartFix, LeafAreaIndexFix, lux_to_n_N, soil_moisture_to_mm
 
@@ -63,9 +63,11 @@ def on_mesage(mosq, obj, msg):
     global awc_potato
     global real_et
 
+
     n_days = 130
     peak_l_a_index = 3
     json_msg = json.loads(msg.payload)
+    n_N = lux_to_n_N(json_msg["bh1750_illuminance"])
     json_msg['id'] = 123
     json_msg['status'] = 1
 
@@ -78,8 +80,6 @@ def on_mesage(mosq, obj, msg):
     temp_cloudy_days_fix = SummerTemperatureFixCIII(temperature=json_msg["ds18b20_temp"]).clear_days_fix()
     temp_clear_days_fix = SummerTemperatureFixCIII(temperature=json_msg["ds18b20_temp"]).cloudy_days_fix()
 
-    n_N = lux_to_n_N(json_msg["bh1750_illuminance"])
-	
     potential_productivity = PotentialProductivity(extra_radiation.ho_cal_sqaured_cm(),
                                                    temp_cloudy_days_fix=temp_cloudy_days_fix,
                                                    temp_clear_days_fix=temp_clear_days_fix,
@@ -123,7 +123,7 @@ def on_mesage(mosq, obj, msg):
     json_msg["precipitation"] = precipitation
     json_msg["eto"] = eto
     json_msg["etc"] = real_et
-	   
+
     socketio.emit('my response', {'topic': msg.topic, 'payload': json_msg},
                   namespace='/weather_data')
 
