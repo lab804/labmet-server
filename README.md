@@ -101,6 +101,32 @@ the components work properly.
 4. Enjoy!
 
 
+## i don't have station! ##
+No problem, use a "station simulate".
+
+```bash
+$ python simulate-station.py # or help?
+$ python simulate-station --help
+
+usage: simulate-station.py [-h] [-host HOST] [-port PORT] [-k KEEPALIVE]
+                           [-u USER] [-p PASSWORD] [-t TOPIC] [-d DELAY]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -host HOST, --host HOST
+                        brokerurl
+  -port PORT, --port PORT
+                        port
+  -k KEEPALIVE, --keepalive KEEPALIVE
+                        keepalive
+  -u USER, --user USER  user
+  -p PASSWORD, --password PASSWORD
+                        password
+  -t TOPIC, --topic TOPIC
+                        topic
+  -d DELAY, --delay DELAY
+                        delay
+```
 
 
 ### Copyright & License
