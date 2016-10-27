@@ -4,10 +4,9 @@
 import sys
 import signal
 
-from flask_script import Manager, Server as _Server, Option
+from flask_script import Manager, Server as _Server, Option, commands
 
 from app import create_app, external
-from app.resources import MQTTThread
 
 manager = Manager(create_app('default'))
 
@@ -60,15 +59,6 @@ class Server(_Server):
         if use_reloader is None:
             use_reloader = app.debug
 
-        mqtt_thread = MQTTThread()
-        mqtt_thread.start()
-
-        def signal_handler(signal, frame):
-            mqtt_thread.stop = True
-            sys.exit(0)
-
-        signal.signal(signal.SIGINT, signal_handler)
-
         external.socketio.run(app,
                               host=host,
                               port=port,
@@ -78,6 +68,10 @@ class Server(_Server):
 
 
 manager.add_command("runserver", Server())
+manager.add_command("clean", commands.Clean())
+manager.add_command("shell", commands.Shell())
+manager.add_command("urls", commands.ShowUrls())
+
 
 if __name__ == '__main__':
     manager.run()
