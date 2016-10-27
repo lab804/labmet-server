@@ -64,7 +64,7 @@ client.connect(args['host'],
 # public
 try:
     while True:
-        payload = random_data()
+        payload = json.dumps(random_data())
         client.publish(args['topic'], payload)
         time.sleep(args['delay'])
 except (KeyboardInterrupt, SystemExit):
