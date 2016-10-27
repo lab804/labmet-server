@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ..labmetExceptions import InputTypeException
-from datetime import datetime
-from factors import Photoperiod
 import math
+from datetime import datetime
+
+from labmet.labmetExceptions import InputTypeException
+from labmet.radiation.factors import Photoperiod
 
 
 class RadiationTableMethod(object):
