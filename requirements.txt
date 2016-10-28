@@ -16,3 +16,4 @@ tabulate==0.7.5
 Werkzeug==0.11.11
 requests
 eventlet
+socketIO-client-2
