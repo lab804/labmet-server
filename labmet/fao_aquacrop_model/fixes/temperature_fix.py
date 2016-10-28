@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import math
+from labmet.labmetExceptions.labmetExceptions import InputTypeException
+
 __author__ = 'joaotrevizoliesteves, Murilo Ijanc'
 __copyright__ = "Copyright 2015, Lab804"
 __license__ = "BSD"
 __version__ = "0.1"
-
-import math
-from ...labmetExceptions import InputTypeException
 
 
 class WinterTemperatureFixCIII(object):

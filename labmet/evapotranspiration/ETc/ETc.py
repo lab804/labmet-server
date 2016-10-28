@@ -13,7 +13,7 @@ Copyright 2016, Lab804
 
 import tabulate
 
-from ...labmetExceptions import InputException, InputRangeException
+from labmet.labmetExceptions.labmetExceptions import InputException, InputRangeException
 from functools import reduce
 
 

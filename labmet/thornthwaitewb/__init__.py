@@ -1,1 +1,1 @@
-from .thornthwaitewb import *
+from labmet.thornthwaitewb.thornthwaitewb import *
