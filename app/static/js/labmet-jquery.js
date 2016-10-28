@@ -14,11 +14,11 @@
 
             var options = $.extend({
                 'host': _defaulthost,
-                '_id': [],
+                '_ids': [],
                 'namespace': 'weather_data',
             }, _options);
 
-            var _ids = options['_id'];
+            var _ids = options['_ids'];
 
             var _host = options['host'] + '/' + options['namespace'];
 

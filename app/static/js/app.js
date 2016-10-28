@@ -3,5 +3,5 @@
       '_ids': []
     };
 
-    $('div#labData1').LabMet({'_id': [1, 2]});
+    $('div#labData1').LabMet({'_ids': [1]});
 })(jQuery);
