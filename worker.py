@@ -5,10 +5,9 @@ weather station.
 """
 
 import sys
-import json
 import argparse
 import paho.mqtt.client as mqtt
-from socketIO_client import SocketIO, LoggingNamespace
+from socketIO_client import SocketIO
 
 
 # Arguments
