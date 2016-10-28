@@ -103,7 +103,7 @@
                 '                  <span class="pull-right animated" id="dht22_humid-'+_id+'">',
                 '                      0',
                 '                  </span>',
-                '                  <span class="label label-success" style="margin-right: 10px;">OK</span> Humidade',
+                '                  <span class="label label-success" style="margin-right: 10px;">OK</span> Humidity',
                 '              </li>',
                 '              <li class="list-group-item" style="padding: 10px 0; border-top: 1px solid #e7eaec; border-left:0; border-right: 0; border-bottom: 0;">',
                 '                  <span class="pull-right animated" id="bh1750_illuminance-'+_id+'">',
@@ -123,22 +123,28 @@
                 '      <div class="flot-chart dashboard-chart">',
                 '          <div class="labmet-flot" id="flot-'+_id+'"></div>',
                 '          <div class="row text-left">',
-                '            <div class="col-xs-4">',
+                '            <div class="col-xs-3">',
                 '              <div style="margin-left: 20px;">',
                 '                <span class="h4 font-bold" style="display: block !important; margin-top: 15px; font-weight: 600;" id="potential_productivity-'+_id+'">0</span>',
-                '                <small class="text-muted" style="display: block !important; margin-bottom: 15px; color: #888888;">Real productivity</small>',
+                '                <small class="text-muted" style="display: block !important; margin-bottom: 15px; color: #888888;">Potential Productivity</small>',
                 '              </div>',
                 '            </div>',
-                '            <div class="col-xs-4">',
+                '            <div class="col-xs-3">',
+                '              <div style="margin-left: 20px;">',
+                '                <span class="h4 font-bold" style="display: block !important; margin-top: 15px; font-weight: 600;" id="obtainable_productivity-'+_id+'">0</span>',
+                '                <small class="text-muted" style="display: block !important; margin-bottom: 15px; color: #888888;">Obtainable Productivity</small>',
+                '              </div>',
+                '            </div>',
+                '            <div class="col-xs-3">',
                 '              <div style="margin-left: 20px;">',
                 '                <span class="h4 font-bold" style="display: block !important;margin-top: 15px; font-weight: 600;" id="etc-'+_id+'">0</span>',
-                '                <small class="text-muted" style="display: block !important;margin-bottom: 15px; color: #888888;">Quanto está consumindo</small>',
+                '                <small class="text-muted" style="display: block !important;margin-bottom: 15px; color: #888888;">Potentinal Water Usage</small>',
                 '              </div>',
                 '            </div>',
-                '            <div class="col-xs-4">',
+                '            <div class="col-xs-3">',
                 '              <div style="margin-left: 20px;">',
                 '                <span class="h4 font-bold" style="display: block !important;margin-top: 15px; font-weight: 600;" id="eto-'+_id+'">0</span>',
-                '                <small class="text-muted" style="display: block !important;margin-bottom: 15px; color: #888888;">Quanto Deveria Consumir</small>',
+                '                <small class="text-muted" style="display: block !important;margin-bottom: 15px; color: #888888;">Real Water Usage</small>',
                 '              </div>',
                 '            </div>',
                 '          </div>',
@@ -235,7 +241,7 @@
             */
             var setData = function(data) {
                 // parse
-                var _data = jQuery.parseJSON(data);
+                var _data = data;
                 var _id = _data['id'];
                 $.each(_data, function(key, value) {
                     if (key === "collected_at") {

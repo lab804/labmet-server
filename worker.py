@@ -5,9 +5,13 @@ weather station.
 """
 
 import sys
+import json
 import argparse
 import paho.mqtt.client as mqtt
 from socketIO_client import SocketIO
+from datetime import datetime
+
+from app.external import aqua_crop_model
 
 
 # Arguments
@@ -46,7 +50,18 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     """this function send to"""
     payload = msg.payload.decode('utf-8')  # py3
-    socketIO.emit('stations', payload)
+    data = json.loads(payload)
+    productivity_values_data = {"soil_moisture": data["analog_soil_moisture"],
+                                "temperature": data["ds18b20_temp"],
+                                "illuminance": data["bh1750_illuminance"],
+                                "date": datetime.now()
+                                }
+
+    productivity_values = aqua_crop_model.aqua_crop(**productivity_values_data)
+
+    data.update(productivity_values)
+
+    socketIO.emit('stations', json.dumps(data))
     socketIO.wait(seconds=args['wait'])
 
 
