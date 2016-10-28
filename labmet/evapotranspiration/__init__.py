@@ -1,2 +1,2 @@
-from .ETo.thornthwaite import *
-from .ETc.ETc import *
+from labmet.evapotranspiration.ETo.thornthwaite import *
+from labmet.evapotranspiration.ETc.ETc import *

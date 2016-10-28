@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ...labmetExceptions import InputTypeException
+from labmet.labmetExceptions.labmetExceptions import InputTypeException
 
 __author__ = 'joaotrevizoliesteves, Murilo Ijanc'
 __copyright__ = "Copyright 2015, Lab804"

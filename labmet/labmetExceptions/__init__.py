@@ -1,1 +1,1 @@
-from .labmetExceptions import *
+from labmet.labmetExceptions.labmetExceptions import *

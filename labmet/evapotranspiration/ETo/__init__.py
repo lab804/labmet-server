@@ -1,1 +1,1 @@
-from . import thornthwaite
+from labmet.evapotranspiration.ETo import thornthwaite

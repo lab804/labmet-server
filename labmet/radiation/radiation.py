@@ -4,7 +4,7 @@
 import math
 from datetime import datetime
 
-from labmet.labmetExceptions import InputTypeException
+from labmet.labmetExceptions.labmetExceptions import InputTypeException
 from labmet.radiation.factors import Photoperiod
 
 

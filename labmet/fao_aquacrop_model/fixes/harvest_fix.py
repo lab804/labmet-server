@@ -14,7 +14,7 @@ Copyright 2016, Lab804
 import tabulate
 
 from functools import reduce
-from ...labmetExceptions import InputException
+from labmet.labmetExceptions.labmetExceptions import InputException
 
 __author__ = 'joaotrevizoliesteves, Murilo Ijanc'
 __copyright__ = "Copyright 2015, Lab804"
@@ -161,6 +161,19 @@ class HarvestPartFixTable(object):
             "humidity_limits": [12.00, 15.00]
         }
     }
+
+    def has_culture_table(self, culture_name):
+        """has culture table
+
+        Method to check if the desired culture
+        is available for the aquacrop model
+
+        :param culture_name: A string with the culture name
+        :return:
+        """
+        if culture_name in self._cultures:
+            return True
+        return False
 
     def all_cultures_table(self, print_table=True, tablefmt="fancy_grid"):
         """All cultures table
