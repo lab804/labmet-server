@@ -59,9 +59,8 @@ def on_message(client, userdata, msg):
                                 }
 
     productivity_values = aqua_crop_model.aqua_crop(**productivity_values_data)
-
-    data.update(productivity_values)
     print(data)
+    data.update(productivity_values)
     socketIO.emit('stations', json.dumps(data))
     socketIO.wait(seconds=args['wait'])
 
