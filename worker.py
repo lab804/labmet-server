@@ -51,6 +51,7 @@ def on_message(client, userdata, msg):
     """this function send to"""
     payload = msg.payload.decode('utf-8')  # py3
     data = json.loads(payload)
+
     productivity_values_data = {"soil_moisture": data["analog_soil_moisture"],
                                 "temperature": data["ds18b20_temp"],
                                 "illuminance": data["bh1750_illuminance"],

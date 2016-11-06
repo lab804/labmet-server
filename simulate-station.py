@@ -12,7 +12,6 @@ import argparse
 from datetime import datetime
 import paho.mqtt.client as mqtt
 from datetime import datetime
-from app.external import aqua_crop_model
 
 
 def random_data(_id=1):
@@ -31,17 +30,7 @@ def random_data(_id=1):
         "analog_soil_moisture": random.uniform(1.0, 50.0)
     }
 
-    productivity_values_data = {"soil_moisture": data["analog_soil_moisture"],
-                                "temperature": data["ds18b20_temp"],
-                                "illuminance": data["bh1750_illuminance"],
-                                "date": datetime.now()
-                                }
-
-    productivity_values = aqua_crop_model.aqua_crop(**productivity_values_data)
-
-    data.update(productivity_values)
-
-    return json.dumps(data)
+    return data
 
 # Arguments
 ap = argparse.ArgumentParser()

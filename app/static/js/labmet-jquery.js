@@ -240,7 +240,6 @@
             function set data
             */
             var setData = function(data) {
-                // parse
                 var _data = data;
                 var _id = _data['id'];
                 $.each(_data, function(key, value) {
